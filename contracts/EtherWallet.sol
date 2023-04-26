@@ -16,7 +16,9 @@ contract EtherWallet {
     }
     
 
-    function deposit() public payable {}
+    function deposit() public payable {
+        
+    }
 
     function withdraw(address payable receiver, uint amount) public {
         require(msg.sender == owner, "Only owner can withdraw the Ether");

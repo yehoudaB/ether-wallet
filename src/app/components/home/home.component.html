@@ -1,1 +1,18 @@
-<p>home works!</p>
+<div class="container">
+    <p>address : {{this.walletService.address$ | async }} </p>
+    <p>ETH balance : {{ walletService.ethBalance$ | async }}</p>
+    
+    
+    <form class="depositForm" >
+        <mat-form-field appearance="outline">
+                    <mat-label>Deposit Ethers</mat-label>
+            <input  matInput  formControlName="amount" placeholder="12121"  type="number" #amount name="amount">
+            <mat-hint>value is in Ethers </mat-hint>
+        </mat-form-field>
+      <button class="depositBtn" color="warn" mat-raised-button type="button" (click)="onDeposit(amount)">deposit</button>
+    
+    </form>
+    <p>Smart contract address : {{this.contractService.getContractAddress()  }} </p>
+    <p>Smart contract  balance : {{ contractService.ethBalance$ | async }}</p>
+</div>
+

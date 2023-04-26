@@ -1,0 +1,22 @@
+// css container
+ .container {
+   margin: 0 auto;
+   padding: 0 1rem 1rem;
+   padding-top: 1rem;
+ }
+ 
+.depositForm {
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    margin: 0 auto;
+
+}
+
+.depositBtn {
+    margin-left: 2rem;
+   
+    margin-bottom: 1rem;
+    padding: 1.7rem;
+}

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { ContractService } from 'src/app/services/contract.service';
 import { WalletService } from 'src/app/services/wallet.service';
 
 @Component({
@@ -8,12 +10,21 @@ import { WalletService } from 'src/app/services/wallet.service';
 })
 export class HeaderComponent implements OnInit {
   address!: string;
-  balance! : string;
-  constructor(private walletService: WalletService) {}
+  balance! : Observable<string>;
+  constructor(
+    private walletService: WalletService,
+    private contractService: ContractService
+    ) {}
 
   async ngOnInit(): Promise<void> {
     this.connectWallet()
+     console.log( await this.contractService.getContractBallance());
+     
+     this.walletService.address$.subscribe((address) => {
+      this.address = address;
+    });
     
+    this.balance =  this.walletService.ethBalance$;
   }
 
    walletToggle() {
@@ -22,15 +33,15 @@ export class HeaderComponent implements OnInit {
       return;
     }
     this.address = '';
-    this.balance = '';
+    this.balance = of('0');
 
     
   }
   async connectWallet() {
-    await this.walletService.connectWallet();
-    this.address = this.walletService.address;
-    this.balance = this.walletService.balanceEth;
-    
+    await this.walletService.connectWallet();  
+  }
+  getAddress() {
+    return this.address;
   }
   
 
