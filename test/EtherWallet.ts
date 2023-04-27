@@ -17,16 +17,47 @@ describe('EtherWallet', function () {
            expect(await etherWallet.owner()).to.equal(owner.address);
         });
     });
+    describe('Balance', function () {
+        it('should return 0 ether for the contract balance', async function () {
+            const { etherWallet , owner } = await loadFixture(deployFixture);
+            expect(await etherWallet.balanceOf()).to.equal(0);
+        });
+        it('should return 1 ether for the contract balance', async function () {
+            const { etherWallet , owner } = await loadFixture(deployFixture);
+            const amount = ethers.utils.parseEther('1');
+            await etherWallet.deposit({value: amount});
+            expect(await etherWallet.balanceOf()).to.equal(amount);
+        }
+        );
+    });
+
     
     describe('Send', function () {
 
     });     
 
     describe('Deposit', function () {
-        
+        it('should deposit 1 ether to the contract', async function () {
+            const { etherWallet , owner } = await loadFixture(deployFixture);
+            const amount = ethers.utils.parseEther('1');
+            await etherWallet.deposit({value: amount});
+            expect(await etherWallet.balanceOf()).to.equal(amount);
+        });
     });
     describe('Withdraw', function () {
-        
+        it('should withdraw 1 ether from the contract', async function () {
+            const { etherWallet, owner } = await loadFixture(deployFixture);
+            const amount = ethers.utils.parseEther('1');
+            await etherWallet.deposit({value: amount});
+            await etherWallet.withdraw(owner.address, amount);
+            expect(await etherWallet.balanceOf()).to.equal(0);
+        });
+        it('should not withdraw 1 ether from the contract if not owner', async function () {
+            const { etherWallet, owner, otherAccount } = await loadFixture(deployFixture);
+            const amount = ethers.utils.parseEther('1');
+            await etherWallet.deposit({value: amount});
+            await expect(etherWallet.connect(otherAccount).withdraw(owner.address, amount)).to.be.revertedWith('Only owner can withdraw the Ether');
+        });
     });
 
 

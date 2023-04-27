@@ -28,7 +28,7 @@ export class HomeComponent implements  OnInit{
     if(resp) {
       amount.value = '';
     }
-    console.log(resp);
+    console.error(resp);
   }
 
 }
