@@ -13,13 +13,10 @@ export class HeaderComponent implements OnInit {
   balance! : Observable<string>;
   constructor(
     private walletService: WalletService,
-    private contractService: ContractService
     ) {}
 
   async ngOnInit(): Promise<void> {
     this.connectWallet()
-     console.log( await this.contractService.getContractBallance());
-     
      this.walletService.address$.subscribe((address) => {
       this.address = address;
     });

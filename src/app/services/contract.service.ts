@@ -19,7 +19,7 @@ export class ContractService {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const contract = new ethers.Contract(this.contractAddress, EtherWallet.abi, provider);
 
-    this.ethBalanceSubject.next(await  ethers.utils.formatEther( await contract['balanceOf']()));
+    this.ethBalanceSubject.next(ethers.utils.formatEther(await contract['balanceOf']()));
   }    
 
 
@@ -33,8 +33,9 @@ export class ContractService {
       console.log(transaction);
       await transaction.wait();
   
-      this.getContractBallance();
-      this.walletService.connectWallet();
+      
+      await this.walletService.connectWallet();
+      await this.getContractBallance();
       return true;
     } catch (error) {
       console.log(error);
