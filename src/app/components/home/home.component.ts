@@ -23,7 +23,15 @@ export class HomeComponent implements  OnInit{
   }
 
   async onDeposit(amount: HTMLInputElement) {
+    console.log(amount.value)
     await this.contractService.deposit(Number(amount.value));
+
+      amount.value = '';
+
+  }
+  async onWithdraw(amount: HTMLInputElement) {
+    console.log(amount.value);
+    await this.contractService.withdraw(Number(amount.value));
 
       amount.value = '';
 

@@ -1,7 +1,6 @@
 <mat-toolbar>
     <button mat-button routerLink="/">Home</button>
-    <button mat-button routerLink="/about">About</button>
-    <button mat-button routerLink="/contact">Contact</button>
+  
     <!-- add button at end of toolbar -->
     <span  class="fill-remaining-space"></span>
     <span >{{ address ?   address.slice(0, 5)  + '...' + address.slice(-3) : ''}} </span>

@@ -43,6 +43,22 @@ export class ContractService {
       console.log(error);
       this.responseSubject.next(error);
     }
+  }   
+
+  async withdraw(amount: number)  {
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(this.contractAddress, EtherWallet.abi, signer);
+      const transaction = await contract['withdraw']( signer.getAddress(), ethers.utils.parseEther(amount.toString()));
+      await transaction.wait();
+      await this.walletService.connectWallet();
+      await this.getContractBallance();
+      this.responseSubject.next( {reason: 'successful withdrawal'});
+    } catch (error) {
+      console.log(error);
+      this.responseSubject.next(error);
+    }
 
    
 
