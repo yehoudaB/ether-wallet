@@ -8,6 +8,7 @@
 */
 pragma solidity ^0.8.17;
 
+error InvalidAmount(uint amount);
 contract EtherWallet {
     address payable public owner;
 
@@ -17,7 +18,10 @@ contract EtherWallet {
     
 
     function deposit() public payable {
-        
+        if(msg.value == 0) {
+            revert InvalidAmount(msg.value);
+        }
+
     }
 
     function withdraw(address payable receiver, uint amount) public {
@@ -29,3 +33,4 @@ contract EtherWallet {
         return address(this).balance;
     }
 }
+

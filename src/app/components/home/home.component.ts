@@ -9,10 +9,9 @@ import { WalletService } from 'src/app/services/wallet.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements  OnInit{
-  address!: string;
-  balance! : string;
-  contractAddress!: string;
-  contractBalance!: number;
+
+ 
+
   
   
   constructor(
@@ -24,11 +23,10 @@ export class HomeComponent implements  OnInit{
   }
 
   async onDeposit(amount: HTMLInputElement) {
-    const  resp   = await this.contractService.deposit(Number(amount.value));
-    if(resp) {
+    await this.contractService.deposit(Number(amount.value));
+
       amount.value = '';
-    }
-    console.error(resp);
+
   }
 
 }

@@ -7,11 +7,17 @@ import { WalletService } from './wallet.service';
   providedIn: 'root'
 })
 export class ContractService {
-  private contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+  private contractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
  
   private ethBalanceSubject = new BehaviorSubject<string>('0');
   ethBalance$= this.ethBalanceSubject.asObservable();
-  constructor(private  walletService: WalletService ) { }
+
+  private responseSubject = new BehaviorSubject<any>('');
+  response$= this.responseSubject.asObservable();
+
+  constructor(private  walletService: WalletService ) {
+     this.getContractBallance();
+   }
 
 
 
@@ -23,23 +29,19 @@ export class ContractService {
   }    
 
 
-  async deposit(amount: number) : Promise<boolean> {
+  async deposit(amount: number)  {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(this.contractAddress, EtherWallet.abi, signer);
-      console.log(contract)
       const transaction = await contract['deposit']({value: ethers.utils.parseEther(amount.toString())});
-      console.log(transaction);
       await transaction.wait();
-  
-      
       await this.walletService.connectWallet();
       await this.getContractBallance();
-      return true;
+      this.responseSubject.next( {reason: 'Deposit successful'});
     } catch (error) {
       console.log(error);
-      return false;
+      this.responseSubject.next(error);
     }
 
    

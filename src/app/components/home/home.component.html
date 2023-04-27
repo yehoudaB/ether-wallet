@@ -14,5 +14,9 @@
     </form>
     <p>Smart contract address : {{this.contractService.getContractAddress()  }} </p>
     <p>Smart contract  balance : {{ contractService.ethBalance$ | async }}</p>
+
+    <p>
+        {{ (this.contractService.response$ | async)?.reason }}
+    </p>
 </div>
 

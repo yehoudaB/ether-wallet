@@ -14,7 +14,7 @@ describe('EtherWallet', function () {
     describe('Deployment', function () {
         it('should deploy the contract and set the owner to be the deployer address', async function () {
             const { etherWallet , owner } = await loadFixture(deployFixture);
-           expect(await etherWallet.owner()).to.equal(owner.address);
+            expect(await etherWallet.owner()).to.equal(owner.address);
         });
     });
     describe('Balance', function () {
