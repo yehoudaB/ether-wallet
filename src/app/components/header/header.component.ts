@@ -12,13 +12,14 @@ export class HeaderComponent implements OnInit {
   address!: string;
   balance! : Observable<string>;
   constructor(
-    private walletService: WalletService,
+    public walletService: WalletService,
     ) {}
 
   async ngOnInit(): Promise<void> {
     this.connectWallet()
-     this.walletService.address$.subscribe((address) => {
-      this.address = address;
+     this.walletService.address$.subscribe((resp) => {
+      this.address = resp.slice(0, 6) + '...' + resp.slice(-4);
+      console.log(resp);
     });
     
     this.balance =  this.walletService.ethBalance$;
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit {
     
   }
   async connectWallet() {
-    await this.walletService.connectWallet();  
+    await this.walletService.connectWalletWithAlchemy();  
   }
   getAddress() {
     return this.address;

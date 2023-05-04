@@ -7,7 +7,7 @@ import { WalletService } from './wallet.service';
   providedIn: 'root'
 })
 export class ContractService {
-  private contractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+  private contractAddress = '0xE487bD7D701c3D468C0B707e1163EC606a7c72cc';
  
   private ethBalanceSubject = new BehaviorSubject<string>('0');
   ethBalance$= this.ethBalanceSubject.asObservable();
@@ -36,7 +36,7 @@ export class ContractService {
       const contract = new ethers.Contract(this.contractAddress, EtherWallet.abi, signer);
       const transaction = await contract['deposit']({value: ethers.utils.parseEther(amount.toString())});
       await transaction.wait();
-      await this.walletService.connectWallet();
+      await this.walletService.connectWalletWithEthers();
       await this.getContractBallance();
       this.responseSubject.next( {reason: 'Deposit successful'});
     } catch (error) {
@@ -52,7 +52,7 @@ export class ContractService {
       const contract = new ethers.Contract(this.contractAddress, EtherWallet.abi, signer);
       const transaction = await contract['withdraw']( signer.getAddress(), ethers.utils.parseEther(amount.toString()));
       await transaction.wait();
-      await this.walletService.connectWallet();
+      await this.walletService.connectWalletWithEthers();
       await this.getContractBallance();
       this.responseSubject.next( {reason: 'successful withdrawal'});
     } catch (error) {
