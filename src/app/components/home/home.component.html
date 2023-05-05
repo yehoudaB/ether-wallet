@@ -29,5 +29,7 @@
     <p class="contractResponse" *ngIf="(this.contractService.response$ | async)?.reason" >
         {{ (this.contractService.response$ | async)?.reason }}
     </p>
+
+    <h2>the latest block is : {{ alchemyService.latestBlock$  | async }} </h2>
 </div>
 

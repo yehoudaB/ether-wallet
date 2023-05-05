@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { AlchemyService } from 'src/app/services/alchemy.service';
 import { ContractService } from 'src/app/services/contract.service';
 import { WalletService } from 'src/app/services/wallet.service';
 
@@ -9,14 +10,12 @@ import { WalletService } from 'src/app/services/wallet.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements  OnInit{
-
- 
-
-  
   
   constructor(
     public walletService: WalletService,
-    public contractService: ContractService
+    public contractService: ContractService,
+    public alchemyService: AlchemyService
+
     ) {}
 
   async ngOnInit(): Promise<void> {

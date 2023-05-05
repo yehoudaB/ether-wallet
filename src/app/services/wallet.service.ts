@@ -32,7 +32,6 @@ export class WalletService {
   }
 
   async connectWalletWithAlchemy()  {
-    const address2 = await window.ethereum.request
     const address = await window.ethereum.request({ method: 'eth_requestAccounts' })
     const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [address[0], 'latest'] })
     

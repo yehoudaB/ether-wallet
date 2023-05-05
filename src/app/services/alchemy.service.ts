@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Alchemy, AlchemyEventType, Network } from 'alchemy-sdk';
-import { Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlchemyService {
-  latestBlock = 0;
+  latestBlockSubject = new BehaviorSubject<number>(0);
+  latestBlock$ = this.latestBlockSubject.asObservable();
+
   config = {
     apiKey: "rO-vFS4QN5qxsKmhgCT24qRXcKYs6Xl_",
     network:  Network.ETH_SEPOLIA ,
@@ -17,8 +19,11 @@ export class AlchemyService {
   alchemy = new Alchemy(this.config);
   constructor() { 
     // Subscription for new blocks on Eth Mainnet.
-      this.alchemy.ws.on("block", (blockNumber) =>
-    console.log("The latest block number is", blockNumber)
+      this.alchemy.ws.on("block", (blockNumber) => {
+        
+          this.latestBlockSubject.next(blockNumber);
+      }
+    
     );
 
 
