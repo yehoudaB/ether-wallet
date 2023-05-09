@@ -4,6 +4,8 @@ import "@nomicfoundation/hardhat-toolbox";
 
 // create a task for accounts that will liste the accoutns that we get from the hardhat node and the balance  each account currently holds
 task("accounts", "Prints the list of accounts", async (args, hre) => {
+  
+  
   const accounts = await hre.ethers.getSigners();
   for (const account of accounts) {
     const balance = await account.getBalance();
@@ -12,6 +14,9 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
 
   }
 });
+  
+  let API_URL = process.env["API_URL"] ? process.env["API_URL"] : "";
+  let PRIVATE_KEY = process.env["PRIVATE_KEY"] ? process.env["PRIVATE_KEY"] : "";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.18",
@@ -29,8 +34,8 @@ const config: HardhatUserConfig = {
     },
     sepolia: {
       chainId: 11155111,
-      url: 'https://eth-sepolia.g.alchemy.com/v2/rO-vFS4QN5qxsKmhgCT24qRXcKYs6Xl_', // this is my alchemy api key for sepolia network
-      accounts: ["f65581cdb38fa7498e9badbc774e0ecb0affba6da77cbe62d52413ee13024cce"] // this is my seploia account private key
+      url: `https://eth-sepolia.g.alchemy.com/v2/${API_URL}`, // this is my alchemy api key for sepolia network
+      accounts: [`0x${PRIVATE_KEY}`]// this is my seploia account private key
      
     },
   },
